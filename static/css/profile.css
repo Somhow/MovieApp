@@ -1,0 +1,225 @@
+.profile-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 40px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.profile-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 30px;
+    margin-bottom: 30px;
+}
+
+.profile-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 30px;
+    border: 4px solid #f2eade; /* from base-bg-color */
+}
+
+.profile-info {
+    flex-grow: 1;
+}
+
+.profile-username {
+    font-size: 2.2em;
+    color: #183114; /* primary-bg-color */
+    margin: 0 0 5px;
+    font-weight: bold;
+}
+
+.profile-email, .profile-joindate, .profile-name {
+    color: #555;
+    font-size: 1.05em;
+    margin: 4px 0;
+}
+
+.profile-name strong {
+    color: #333;
+}
+
+.profile-input input {
+    font-size: 1.05em;
+    border-radius: 10px;
+    border-width: 1px solid grey;
+    display: block;
+    padding-left: 10px;
+    width: 100%;
+}
+
+input.profile-username {
+    font-size: 2.2em;
+    border-radius: 20px;
+}
+
+.profile-input textarea.profile-bio {
+    font-size: 18px;
+    border-radius: 20px;
+    border-width: 1px solid #7c7c7c;
+    padding-left: 10px;
+    display: block;
+    width: 100%;
+    min-height: 40px;
+    height: 100px;
+    resize: vertical;
+}
+
+.profile-actions {
+    margin-left: auto;
+    align-self: flex-start;
+}
+
+.profile-actions button {
+    display: inline-block;
+    background-color: #183114;
+    color: #FCEE21;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.95em;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 10px;
+}
+
+.profile-actions button:hover {
+    background-color: #446129;
+    transform: translateY(-2px);
+}
+
+.user-posts .posts-title {
+    font-size: 1.8em;
+    color: #183114;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #f2eade;
+    padding-bottom: 10px;
+}
+
+.posts-list .post-item {
+    background-color: #fdfcfb;
+    padding: 25px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #eee;
+    transition: box-shadow 0.3s ease;
+}
+
+.posts-list .post-item:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.post-item .post-title {
+    margin: 0 0 8px;
+}
+
+.post-item .post-title a {
+    text-decoration: none;
+    color: #183114;
+    font-size: 1.4em;
+    font-weight: 600;
+}
+
+.post-item .post-title a:hover {
+    color: #446129;
+}
+
+.post-item .post-meta {
+    font-size: 0.85em;
+    color: #777;
+    margin-bottom: 15px;
+}
+
+.post-item .post-snippet {
+    font-size: 1em;
+    line-height: 1.6;
+    color: #444;
+    margin-bottom: 15px;
+}
+
+.post-item .read-more {
+    font-weight: bold;
+    color: #446129;
+    text-decoration: none;
+}
+
+.post-item .read-more:hover {
+    text-decoration: underline;
+}
+
+.post-actions {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.post-actions .btn-delete {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.post-actions .btn-delete:hover {
+    background-color: #c0392b;
+    transform: translateY(-1px);
+}
+
+.user-posts#saved-posts{
+    display: none;
+}
+
+.posts-selector{
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.posts-selector button{
+    font-size: 30px;
+    padding: 10px 30px;
+    border: 5px solid gray;
+    border-radius: 10px;
+
+    flex-shrink: 1;
+    flex-grow: 1;
+
+    background-color: darkgray;
+    color: gray;
+    cursor: pointer;
+
+    transition: 0.3s ease-out;
+}
+
+.posts-selector button.active{
+    background-color: var(--primary-bg-color);
+    color: var(--primary-text-color);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-color: var(--primary-text-color);
+}
+
+.posts-selector button:hover{
+    background-color: var(--primary-bg-color);
+    color: var(--primary-text-color);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    border-color: var(--primary-text-color);
+}

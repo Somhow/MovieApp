@@ -1,0 +1,97 @@
+.title {}
+
+.reg_form {
+    width: 80%;
+    margin: 30px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 20px 10px;
+    background-color: var(--primary-bg-color);
+    color: var(--primary-text-color);
+    border-radius: 5px;
+}
+
+.reg_form label {
+    font-size: 18px;
+    font-weight: 500;
+    margin-top: 20px;
+}
+
+.reg_form label span {
+    color: red;
+}
+
+.reg_form input {
+    margin-top: 5px;
+    font-size: 18px;
+    font-weight: 600;
+    width: 100%;
+    padding: 5px 10px;
+}
+
+.reg_form select {
+    margin-top: 5px;
+    font-size: 18px;
+    font-weight: 600;
+    width: 100%;
+    padding: 5px 10px;
+}
+
+.reg_form textarea {
+    resize: vertical;
+    margin-top: 5px;
+    font-size: 15px;
+    font-weight: 400;
+    padding: 5px 10px;
+    min-height: 200px;
+}
+
+.reg_form button {
+    background: var(--primary-text-color);
+    border-radius: 20px;
+    color: var(--base-text-color);
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    height: 40px;
+    margin-top: 20px;
+    padding: 5px 10px;
+}
+
+.helptext {
+    color: lightgray;
+    font-size: 14px;
+    margin-left: 20px;
+}
+
+.helptext ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+    padding: 0;
+}
+
+.errorlist {
+    color: red;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    list-style: none;
+    text-transform: uppercase;
+    padding: 0;
+    margin-left: 20px
+}
+
+.reg_form input:hover {
+    background-color: var(--secondary-text-color);
+    color: var(--primary-text-color);
+    border: solid 3px var(--primary-text-color);
+}
+
+.reg_form button:hover {
+    background-color: var(--secondary-text-color);
+    color: var(--primary-text-color);
+    border: solid 3px var(--secondary-text-color);
+}

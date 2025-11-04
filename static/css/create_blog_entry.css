@@ -1,0 +1,60 @@
+.title {}
+
+.entry_form {
+    width: 80%;
+    margin: 30px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 20px 10px;
+    background-color: var(--primary-bg-color);
+    color: var(--primary-text-color);
+    border-radius: 5px;
+}
+
+.entry_form label {
+    font-size: 18px;
+    font-weight: 500;
+    margin-top: 20px;
+}
+
+.entry_form label span {
+    color: red;
+}
+
+.entry_form input {
+    margin-top: 5px;
+    font-size: 18px;
+    font-weight: 600;
+    width: 100%;
+    padding: 5px 10px;
+}
+
+.entry_form select {
+    margin-top: 5px;
+    font-size: 18px;
+    font-weight: 600;
+    width: 100%;
+    padding: 5px 10px;
+}
+
+.entry_form textarea {
+    resize: vertical;
+    margin-top: 5px;
+    font-size: 15px;
+    font-weight: 400;
+    padding: 5px 10px;
+    min-height: 200px;
+}
+
+.entry_form button {
+    background: var(--primary-text-color);
+    border-radius: 20px;
+    color: var(--base-text-color);
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    height: 40px;
+    margin-top: 20px;
+    padding: 5px 10px;
+}

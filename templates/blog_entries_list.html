@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block head %}
+<title>Blog App:All Entries</title>
+<link rel="stylesheet" href="/static/css/style.css">
+<link rel="stylesheet" href="/static/css/blog_entries_list.css">
+{% endblock %}
+
+{% block content %}
+<div class="all_entries_container">
+    <div class="entries_categories">
+
+        <a href="?" class="category active">All</a>
+
+        {% for category in categories %}
+
+        <a class="category"
+            href="?category={{category.title}}">{{category.title}}</a>
+
+        {% endfor %}
+    </div>
+
+    <div class="blogs-list">
+        {% for post in posts %}
+        <div class="blog">
+            <a href="{% url 'blog_entry_details' blog_id=post.id %}"
+                class="blog-link">
+                <div class="blog-header">
+                    <img src="/static/img/blog_cart.png" alt>
+                    <p
+                        class="blog-header-category">{{post.category.title}}</p>
+                </div>
+                <div class="blog-content">
+                    <h2 class="blog-title">{{post.title}}</h2>
+                    <div
+                        class="blog-description">{{post.content|safe}}</div>
+                    <div class="blog-content-created">
+                        <p
+                            class="blog-content-created-date">
+                            {{post.created_at|date:"d/m/Y"}}</p>
+                        <p
+                            class="blog-content-created-author">{{post.user}}</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+
+    </div>
+
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const categories = document.querySelectorAll(".category");
+        categories.forEach(category=>category.classList.remove("active"))
+
+        const urlParams=new URLSearchParams(window.location.search);
+        const categoryParam=urlParams.get("category");
+        
+        if(categoryParam){
+            const activeCategory=document.querySelector(`.category[href="?category=${categoryParam}"]`);
+            if(activeCategory){
+                activeCategory.classList.add("active");
+            }
+        }else{
+            const activeCategory=document.querySelector('.category[href="?"]');
+            if(activeCategory){
+                activeCategory.classList.add("active");
+            }
+            
+        }
+    })
+</script>
+{% endblock %}

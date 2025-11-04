@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/static/css/nullable.css">
+        {% block head %}
+
+        <title>Blog App</title>
+        {% endblock %}
+    </head>
+    <body>
+        <nav class="nav">
+            <h1 class="nav-title"> Blog App</h1>
+            <ul class="nav-links">
+                <li class="nav-link nav-active"><a href="/">Home</a></li>
+                <li class="nav-link nav-active"><a href="/registration/">register</a></li>
+                <li class="nav-link nav-active"><a href="/entries/create">create</a></li>
+                <li class="nav-link nav-active"><a href="/profile/">profile</a></li>
+                {% if user %}
+                    <li class="nav-link nav-active"><a href="/logout/">logout</a></li>
+                {% else %}
+                    <li class="nav-link nav-active"><a href="/login/">login</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li
+                {% if message.tags %}
+                class="{{ message.tags }}"
+                {% endif %}>
+                <p> {{message}} </p>
+                <button class="message-close-btn" onclick="closeMessage(this)">
+                    <svg class="progress-ring" width="50" height="50">
+                        <circle
+                            class="progress-ring-circle"
+                            stroke="darkred"
+                            stroke-width="3"
+                            fill="transparent"
+                            r="20"
+                            cx="23"
+                            cy="25"></circle>
+                    </svg>
+                    <img src="/static/img/cross.png" alt="Close">
+                </button>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        {% block content %}
+
+        {% endblock %}
+
+        <script>
+
+            function closeMessage(btn){
+                console.log("Close message");
+                
+                let message=btn.parentElement;
+                message.remove();
+                // message.style.display="none";
+            }
+
+            document.addEventListener('DOMContentLoaded', function () {
+                let messages=document.querySelectorAll(".messages li");
+
+
+                messages.forEach((message) => {
+                    let timeout=15000;
+                    let circle=message.querySelector(".progress-ring-circle");
+                    if (!circle){
+                        return
+                    }
+
+                    let radius=circle.r.baseVal.value;
+                    let dis=2*Math.PI*radius;
+                    console.log("Radius: dis",radius, dis );
+                   
+                    let totalSteps=timeout/50;
+                    let step=0;
+
+                    circle.style.strokeDasharray=`${dis} ${dis}`;
+                    circle.style.strokeDashoffset=0;
+
+                    let interval=setInterval(()=>{
+                        console.log("Interval");
+                        step++;
+                        let progress=step/totalSteps;
+                        let offset=dis * progress;
+                        console.log("Offset: ", offset);
+                        circle.style.strokeDashoffset=offset;
+                         
+                        if (step>=totalSteps){
+                            clearInterval(interval);
+                            message.remove();
+                        }
+
+                    }, 50)
+                });
+            });
+            
+
+
+
+        </script>
+
+    </body>
+</html>

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block head %}
+<title>Blog App:Login</title>
+<link rel="stylesheet" href="/static/css/style.css">
+<link rel="stylesheet" href="/static/css/auth.css">
+
+{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <form class="reg_form" method="post">
+        <h1 class="title">Login</h1>
+        {% csrf_token %}
+        {{form.as_div}}
+
+        <button type="submit">Login</button>
+    </form>
+</div>
+{% endblock %}

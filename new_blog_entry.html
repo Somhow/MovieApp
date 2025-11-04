@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Confirm Your Registration</title>
+
+
+<body>
+  
+</body>
+<body style="margin:0; padding:0; background-color:#f4f4f4; font-family: Arial, sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f4f4f4; padding:20px 0;">
+    <tr>
+      <td align="center">
+        <table width="600" cellpadding="0" cellspacing="0" style="background-color:#ffffff; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.1); padding:20px;">
+         
+            
+          <tr>
+            <td style="text-align:center;">
+              <h2 style="color:#333333; margin:0 0 10px;">📰 Нова стаття: {{ entry.title }}</h2>
+            </td>
+          </tr>
+
+         
+          <tr>
+            <td>
+              <p style="color:#555555; line-height:1.6; font-size:16px; margin:0 0 20px;">
+                {{ entry.content|truncatewords:40 }}...
+              </p>
+            </td>
+          </tr>
+
+         
+          <tr>
+            <td align="center">
+              <a href="{{ absolute_url }}" style="display:inline-block; padding:12px 25px; background-color:#007BFF; color:#ffffff; text-decoration:none; border-radius:5px; font-weight:bold;">
+                Читати далі
+              </a>
+            </td>
+          </tr>
+
+          
+          <tr>
+            <td style="padding-top:20px; text-align:center; font-size:12px; color:#999999;">
+              Ви отримали цей лист, бо підписані на новини нашого блогу.
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+
+
+   </body>
+</html>

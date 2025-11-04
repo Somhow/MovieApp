@@ -1,0 +1,305 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<title>{{ user.username }}'s Profile | Blog App</title>
+<link rel="stylesheet" href="/static/css/style.css">
+<link rel="stylesheet" href="/static/css/profile.css">
+{% endblock %}
+
+{% block content %}
+<div class="profile-container">
+    <div class="profile-header">
+        <img src="{% if user.profile.avatar %}{{ user.profile.avatar.url }}{% else %}{% static 'images/default-avatar.png' %}{% endif %}"
+            alt="{{ user.username }}'s avatar" class="profile-avatar">
+
+        <div class="profile-info">
+            <h1 class="profile-username">{{ user.username }}</h1>
+            {% if request.user == user %}
+            <p class="profile-email">{{ user.email }}</p>
+            {% endif %}
+            <p class="profile-joindate">Joined on
+                {{user.date_joined|date:"F j, Y" }}
+            </p>
+            {% if user.first_name or user.last_name %}
+            <p class="profile-name"><strong>Name:</strong>
+                {{user.get_full_name }}</p>
+            {% endif %}
+            {% if user.first_name or user.last_name %}
+            <p class="profile-bio"><strong>Bio:</strong>
+                {{user.profile.bio }}</p>
+            {% endif %}
+        </div>
+
+        <!-- Edit Mode -->
+        <div class="profile-input" style="display: none;">
+
+            <input type="text" id="edit-username" value="{{user.username}}" placeholder="Enter new username..."
+                class="profile-username">
+
+            <input type="email" id="edit-email" value="{{user.email}}" placeholder="Enter new email..."
+                class="profile-email">
+
+            <p class="profile-joindate">Joined on
+                {{user.date_joined|date:"F j, Y" }}
+            </p>
+
+            <input type="text" id="edit-first-name" value="{{user.first_name}}" placeholder="Enter new first name..."
+                class="profile-name">
+
+            <input type="text" id="edit-last-name" value="{{user.last_name}}" placeholder="Enter new last name..."
+                class="profile-name">
+
+            <textarea id="edit-bio" class="profile-bio"
+                placeholder="Enter something about yourself...">{{user.profile.bio}}</textarea>
+        </div>
+
+        {% if request.user == user %}
+        <div class="profile-actions">
+            <button href="#" class="profile-edit">Edit Profile</button>
+            <button href="#" class="profile-save" style="display: none;">Save Changes</button>
+            <button href="#" class="profile-cancel" style="display: none;">Cancel</button>
+        </div>
+        {% endif %}
+    </div>
+
+    {% if request.user == user %}
+    <div class="posts-selector">
+        <button id="user-posts-btn" class="active">
+            <h2>
+                My Posts
+            </h2>
+        </button>
+        <button id="user-saved-posts-btn">
+            <h2>
+                Saved Posts
+            </h2>
+        </button>
+    </div>
+    {% endif %}
+
+    <div class="user-posts" id="posts">
+        {% if posts %}
+        <div class="posts-list">
+            {% for post in posts %}
+            <article class="post-item">
+                <h3 class="post-title">
+                    <a href="{% url 'blog_entry_details' blog_id=post.id %}">
+                        {{post.title }}
+                    </a>
+                </h3>
+                <p class="post-meta">
+                    Published on
+                    {{post.created_at|date:"F j, Y" }}
+                </p>
+                <div class="post-snippet">
+                    {{ post.content|safe|truncatewords:40|linebreaks }}
+                </div>
+                <div class="post-actions">
+                    <a href="{% url 'blog_entry_details' blog_id=post.id %}" class="read-more">Read more</a>
+                    {% if request.user == user %}
+                    <form action="{% url 'blog_entry_delete' blog_id=post.id %}" method="post"
+                        onsubmit="return confirm('Are you sure you want to delete this post?');">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-delete">Delete</button>
+                    </form>
+                    <form action="{% url 'edit_blog_entry' blog_id=post.id %}" method="get"
+                        onsubmit="return confirm('Are you sure you want to edit this post?');">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-edit">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <path
+                                        d="M15.4998 5.49994L18.3282 8.32837M3 20.9997L3.04745 20.6675C3.21536 19.4922 3.29932 18.9045 3.49029 18.3558C3.65975 17.8689 3.89124 17.4059 4.17906 16.9783C4.50341 16.4963 4.92319 16.0765 5.76274 15.237L17.4107 3.58896C18.1918 2.80791 19.4581 2.80791 20.2392 3.58896C21.0202 4.37001 21.0202 5.63634 20.2392 6.41739L8.37744 18.2791C7.61579 19.0408 7.23497 19.4216 6.8012 19.7244C6.41618 19.9932 6.00093 20.2159 5.56398 20.3879C5.07171 20.5817 4.54375 20.6882 3.48793 20.9012L3 20.9997Z"
+                                        stroke="#000000" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"></path>
+                                </g>
+                            </svg>
+                            Edit
+                        </button>
+                    </form>
+                    {% endif %}
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p>{{ profile_user.username }} has not published any posts yet.</p>
+        {% endif %}
+    </div>
+
+    {% if request.user == user %}
+    <div class="user-posts" id="saved-posts">
+        {% if saved_posts %}
+        <div class="posts-list">
+            {% for post in saved_posts %}
+            <article class="post-item">
+                <h3 class="post-title">
+                    <a href="{% url 'blog_entry_details' blog_id=post.post.id %}">
+                        {{post.post.title }}
+                    </a>
+                </h3>
+                <p class="post-meta">
+                    Published on
+                    {{post.post.created_at|date:"F j, Y" }}
+                </p>
+                <div class="post-snippet">
+                    {{ post.post.content|safe|truncatewords:40|linebreaks }}
+                </div>
+                <div class="post-actions">
+                    <a href="{% url 'blog_entry_details' blog_id=post.post.id %}" class="read-more">Read more</a>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p>{{ profile_user.username }} has not saved any posts yet.</p>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+
+<script>
+
+
+    function switchUserPosts() {
+        const userPostsBlock = document.querySelector("#posts")
+        const userPostsBtn = document.querySelector("#user-posts-btn")
+
+        const savedUserPostsBlock = document.querySelector("#saved-posts")
+        const savedUserPostsBtn = document.querySelector("#user-saved-posts-btn")
+
+        document.querySelector("#user-posts-btn").addEventListener("click", (e) => {
+            userPostsBlock.style.display = "block";
+            savedUserPostsBlock.style.display = "none";
+
+            userPostsBtn.classList.add("active")
+            savedUserPostsBtn.classList.remove("active")
+        })
+
+        document.querySelector("#user-saved-posts-btn").addEventListener("click", (e) => {
+            userPostsBlock.style.display = "none";
+            savedUserPostsBlock.style.display = "block";
+
+            userPostsBtn.classList.remove("active")
+            savedUserPostsBtn.classList.add("active")
+        })
+    }
+
+    function switchProfileMode() {
+        const porfileInput = document.querySelector(".profile-input")
+        const porfileInfo = document.querySelector(".profile-info")
+
+        const editBtn = document.querySelector(".profile-edit")
+        const saveBtn = document.querySelector(".profile-save")
+        const cancelBtn = document.querySelector(".profile-cancel")
+
+        editBtn.addEventListener("click", (e) => {
+            console.log("2");
+            porfileInfo.style.display = "none";
+            porfileInput.style.display = "block";
+            editBtn.style.display = "none";
+            saveBtn.style.display = "block";
+            cancelBtn.style.display = "block";
+        })
+        cancelBtn.addEventListener("click", (e) => {
+            console.log("4");
+            porfileInfo.style.display = "block";
+            porfileInput.style.display = "none";
+            editBtn.style.display = "block";
+            saveBtn.style.display = "none";
+            cancelBtn.style.display = "none";
+        })
+    }
+
+    function saveUserUpdates() {
+        const saveBtn = document.querySelector(".profile-save");
+
+        const usernameField = document.querySelector("#edit-username");
+        const emailField = document.querySelector("#edit-email");
+        const firstNameField = document.querySelector("#edit-first-name");
+        const lastNameField = document.querySelector("#edit-last-name");
+        const bioField = document.querySelector("#edit-bio");
+
+        saveBtn.addEventListener("click", () => {
+            const new_data = {
+                username: usernameField.value.trim(),
+                email: emailField.value.trim(),
+                firstName: firstNameField.value.trim(),
+                lastName: lastNameField.value.trim(),
+                bio: bioField.value.trim()
+            }
+            console.log("New user data: ", new_data);
+
+            const url = "{% url 'update_profile' %}"
+
+
+            try {
+                fetch(url, {
+                    method: "POST",
+                    body: JSON.stringify(new_data),
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": "{{ csrf_token }}"
+                    }
+
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log("User updated:", data);
+                        if (data.success) {
+                            console.log("Updated successfully!");
+                            updateUserDetails(data.user);
+                            const cancelBtn = document.querySelector(".profile-cancel");
+                            cancelBtn.click();
+                        } else {
+                            const error = data.error;
+                            console.log("Failed update user. Error:", error);
+                            alert(error);
+                        }
+                    })
+            } catch (e) {
+                console.error("Error save user updates:", e);
+            }
+        });
+    }
+
+    function updateUserDetails(user) {
+        const htmlContent = `
+            
+            <h1 class="profile-username">${user.username}</h1>
+
+            <p class="profile-email">${user.email}</p>
+            <p class="profile-joindate">Joined on
+                {{user.date_joined|date:"F j, Y" }}
+            </p>
+        
+            <p class="profile-name"><strong>Name:</strong>
+                ${user.firstName || ""}  ${user.lastName || ""}
+            </p>
+            
+            <p class="profile-bio"><strong>Bio:</strong>
+                ${user.bio}
+            </p>
+            
+        `;
+
+        const profileInfo = document.querySelector(".profile-info");
+        profileInfo.innerHTML = htmlContent;
+    }
+
+    document.addEventListener("DOMContentLoaded", (e) => {
+
+        switchUserPosts();
+
+        switchProfileMode();
+
+        saveUserUpdates();
+
+    })
+
+
+</script>
+{% endblock %}
