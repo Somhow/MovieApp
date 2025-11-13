@@ -7,7 +7,7 @@ urlpatterns = [
     path("logout/", logout, name="logout"),
     path("activate/<uid>/<token>/", activate, name="activate"),
     path("profile/", profile, name="profile"),
-    path("profile/<username>", profile, name="profile"),
+    path("profile/<username>/", profile, name="profile"),
     path("entries/<int:blog_id>/toggle_save/", toggle_save_post, name="toggle_save_post"),
-    path("profile/user/update", update_profile, name="update_profile")
+    path("profile/user/update/", update_profile, name="update_profile")
 ]

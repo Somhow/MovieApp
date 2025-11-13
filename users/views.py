@@ -83,7 +83,7 @@ def login(request):
 def logout(request):
     from django.contrib.auth import logout
 
-    logout()
+    logout(request)
 
     return redirect("home")
 
