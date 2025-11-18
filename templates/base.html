@@ -17,7 +17,7 @@
                 <li class="nav-link nav-active"><a href="/registration/">register</a></li>
                 <li class="nav-link nav-active"><a href="/entries/create">create</a></li>
                 <li class="nav-link nav-active"><a href="/profile/">profile</a></li>
-                {% if user %}
+                {% if user.username %}
                     <li class="nav-link nav-active"><a href="/logout/">logout</a></li>
                 {% else %}
                     <li class="nav-link nav-active"><a href="/login/">login</a></li>
