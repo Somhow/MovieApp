@@ -12,7 +12,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 
 DEBUG = os.getenv("DEBUG")
 
-ALLOWED_HOSTS = ["blogapp-adpr.onrender.com/", "localhost", "127.0.0.1:8000"]
+ALLOWED_HOSTS = ["blogapp-adpr.onrender.com", "localhost", "127.0.0.1:8000"]
 
 
 
